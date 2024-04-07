@@ -1,3 +1,4 @@
+"use client";
 import AdvancedParameters from "./AdvancedParameters";
 import styles from "./components.module.css";
 import { useState } from "react";
@@ -5,11 +6,15 @@ import { Input, Collapse, Button, Modal } from "antd";
 import { UploadFile } from "antd/lib/upload/interface";
 import UploadStructureFile from "../components/UploadStructureFile";
 import { QuestionCircleOutlined } from "@ant-design/icons";
+import textweb from "../json/textweb.json";
+
 const CustomSequenceLoad = () => {
   const { TextArea } = Input;
   const [uploadStructure, setUploadStructure] = useState<
     UploadFile[] | undefined
   >(undefined);
+  const [target, setTarget] = useState("");
+  const [sequence, setSequence] = useState("");
   const infoGen = () => {
     Modal.info({
       title: "This is a notification message",
@@ -28,34 +33,42 @@ const CustomSequenceLoad = () => {
     });
   };
 
-  const infoAdvance = () => {
-    Modal.info({
-      title: "This is a notification message",
-      content: (
-        <div>
-          <p>
-            Optimal parameters to design amiRNA are chosen and fixed (as
-            indicated below). However, if needed, any/all of them could be
-            changed based on individual preferences (within the permissible
-            range)
-          </p>
-        </div>
-      ),
-      onOk() {},
-    });
-  };
-
   return (
     <div className={styles.backgroundCard}>
-      <h3>Custom sequence</h3>
-      <div onClick={infoGen}>
-        <QuestionCircleOutlined />
+      <div className={styles.title}>
+        <h1>Custom sequence</h1>
+        <div onClick={infoGen} style={{ cursor: "pointer" }}>
+          <QuestionCircleOutlined />
+        </div>
       </div>
-      <p>Sequence</p>
-      <Input placeholder="Basic usage" />
+      <p>Input Sequence</p>
+      <div style={{ marginBottom: "20px" }}>
+        <Button onClick={() => setSequence(textweb.example_sequence)}>
+          example sequence
+        </Button>
+      </div>
+      <TextArea
+        rows={4}
+        placeholder="Basic usage"
+        value={sequence}
+        onChange={(e) => setSequence(e.target.value.toUpperCase())}
+      />
+      <h5>or</h5>
       <p>Targets</p>
-      <TextArea rows={4} placeholder="Basic usage" />
-      Fasta file
+      <div style={{ marginBottom: "20px" }}>
+        <Button onClick={() => setTarget("GAGUUGUACGCCUAUGUGAUGGA")}>
+          example target
+        </Button>
+      </div>
+      <TextArea
+        rows={2}
+        placeholder="Basic usage"
+        value={target}
+        onChange={(e) => setTarget(e.target.value.toUpperCase())}
+      />
+
+      <h5>or</h5>
+      <p>Fasta file</p>
       <UploadStructureFile
       // pdbId={pdbId}
       // setPdbId={setPdbId}
@@ -67,23 +80,25 @@ const CustomSequenceLoad = () => {
       // setLoading={setLoading}
       // setFileName={setFileName}
       />
-      <Collapse
-        items={[
-          {
-            key: "1",
-            label: (
-              <>
-                Advanced parameters{" "}
-                <div onClick={infoAdvance}>
-                  <QuestionCircleOutlined />
-                </div>
-              </>
-            ),
-            children: <AdvancedParameters />,
-          },
-        ]}
-      />
-      <Button>Submit</Button>
+      <h5>and optionally</h5>
+      <div style={{ marginTop: "5px" }}>
+        <Collapse
+          items={[
+            {
+              key: "1",
+              label: <>Advanced parameters</>,
+              children: <AdvancedParameters />,
+            },
+          ]}
+        />
+      </div>
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "25px" }}
+      >
+        <Button type="primary" size="large">
+          Submit
+        </Button>
+      </div>
     </div>
   );
 };

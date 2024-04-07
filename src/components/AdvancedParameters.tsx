@@ -1,13 +1,36 @@
-import { InputNumber, Checkbox, Select, Tooltip, Button } from "antd";
+import { InputNumber, Checkbox, Select, Tooltip, Button, Modal } from "antd";
 import textweb from "../json/textweb.json";
+import styles from "./components.module.css";
+import { useState } from "react";
+import { InfoCircleOutlined, ReloadOutlined } from "@ant-design/icons";
 
 const AdvancedParameters = () => {
+  const infoAdvance = () => {
+    Modal.info({
+      title: "This is a notification message",
+      content: (
+        <div>
+          <p>
+            Optimal parameters to design amiRNA are chosen and fixed (as
+            indicated below). However, if needed, any/all of them could be
+            changed based on individual preferences (within the permissible
+            range)
+          </p>
+        </div>
+      ),
+      onOk() {},
+    });
+  };
+
   return (
-    <>
-      <Button>Reset settings</Button>
-      <div>
+    <div className={styles.tableParameters}>
+      <div className={styles.buttonParameters}>
+        <Button icon={<ReloadOutlined />}>Reset settings</Button>
+        <Button icon={<InfoCircleOutlined />}>Info</Button>
+      </div>
+      <div className={styles.columnsParameters}>
         <Tooltip title={textweb.advanced_parameters.min_gc_content}>
-          <div>
+          <div className={styles.parameter}>
             Min GC content (%):{" "}
             <InputNumber
               min={0}
@@ -18,7 +41,7 @@ const AdvancedParameters = () => {
           </div>
         </Tooltip>
         <Tooltip title={textweb.advanced_parameters.max_gc_content}>
-          <div>
+          <div className={styles.parameter}>
             Max GC content (%):{" "}
             <InputNumber
               min={0}
@@ -29,7 +52,7 @@ const AdvancedParameters = () => {
           </div>
         </Tooltip>
         <Tooltip title={textweb.advanced_parameters.max_gc_stretch}>
-          <div>
+          <div className={styles.parameter}>
             Max GC stretch:{" "}
             <InputNumber
               min={1}
@@ -42,7 +65,7 @@ const AdvancedParameters = () => {
         <Tooltip
           title={textweb.advanced_parameters.number_of_bps_to_init_binding}
         >
-          <div>
+          <div className={styles.parameter}>
             Number of bps to init binding:{" "}
             <InputNumber
               min={0}
@@ -58,7 +81,7 @@ const AdvancedParameters = () => {
               .number_of_bps_to_init_duplex_dissociation
           }
         >
-          <div>
+          <div className={styles.parameter}>
             Bps to init duplex dissociation:{" "}
             <InputNumber
               min={0}
@@ -71,7 +94,7 @@ const AdvancedParameters = () => {
         <Tooltip
           title={textweb.advanced_parameters.min_mfe_difference_between_ends}
         >
-          <div>
+          <div className={styles.parameter}>
             Min MFE difference between ends:{" "}
             <InputNumber
               min={0}
@@ -84,7 +107,7 @@ const AdvancedParameters = () => {
         <Tooltip
           title={textweb.advanced_parameters.two_d_structure_differences}
         >
-          <div>
+          <div className={styles.parameter}>
             2D struct. differences:{" "}
             <InputNumber
               min={0}
@@ -95,7 +118,7 @@ const AdvancedParameters = () => {
           </div>
         </Tooltip>
         <Tooltip title={textweb.advanced_parameters.max_melting_temperature}>
-          <div>
+          <div className={styles.parameter}>
             Max melting temperature:{" "}
             <InputNumber
               min={0}
@@ -106,17 +129,17 @@ const AdvancedParameters = () => {
           </div>
         </Tooltip>
         <Tooltip title={textweb.advanced_parameters.different_prefixes}>
-          <div>
+          <div className={styles.parameter}>
             Different prefixes: <Checkbox onChange={() => console.log("1")} />
           </div>
         </Tooltip>
         <Tooltip title={textweb.advanced_parameters.filter_off_targets}>
-          <div>
+          <div className={styles.parameter}>
             Filter off-targets: <Checkbox onChange={() => console.log("1")} />
           </div>
         </Tooltip>
         <Tooltip title={textweb.advanced_parameters.penalty_for_bad_prefix}>
-          <div>
+          <div className={styles.parameter}>
             Penalty for bad prefix:{" "}
             <InputNumber
               min={0}
@@ -127,23 +150,28 @@ const AdvancedParameters = () => {
           </div>
         </Tooltip>
         <Tooltip title={textweb.advanced_parameters.amirna_id}>
-          <div>
+          <div className={styles.parameter}>
             amiRNA ID:{" "}
             <Select
-              defaultValue="lucy"
-              style={{ width: 120 }}
+              defaultValue="all"
+              style={{ width: 150 }}
               onChange={() => console.log("1")}
               options={[
-                { value: "jack", label: "Jack" },
-                { value: "lucy", label: "Lucy" },
-                { value: "Yiminghe", label: "yiminghe" },
-                { value: "disabled", label: "Disabled", disabled: true },
+                { value: "all", label: "all" },
+                { value: "hsa-mir-21", label: "hsa-mir-21" },
+                { value: "hsa-mir-30a", label: "hsa-mir-30a" },
+                { value: "hsa-mir-33a", label: "hsa-mir-33a" },
+                { value: "hsa-mir-122", label: "hsa-mir-122" },
+                { value: "hsa-mir-135b", label: "hsa-mir-135b" },
+                { value: "hsa-mir-136-v1", label: "hsa-mir-136-v1" },
+                { value: "hsa-mir-155", label: "hsa-mir-155" },
+                { value: "hsa-mir-203a", label: "hsa-mir-203a" },
               ]}
             />
           </div>
         </Tooltip>
       </div>
-    </>
+    </div>
   );
 };
 

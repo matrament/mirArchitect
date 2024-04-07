@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Button } from "antd";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
+import logo from "../assets/logo_mirarchitect.svg";
 
 const Header = () => {
   const isDesktop = useMediaQuery({ query: "(min-width: 1200px)" });
@@ -21,7 +22,10 @@ const DesktopHeader = () => {
     <div className={styles.background}>
       <div className={styles.header}>
         <Link href="/">
-          <p className={pathname == "/" ? styles.active : ""}>mirArchitect</p>
+          <div style={{ display: "flex", flexDirection: "row", gap: "15px" }}>
+            <Image src={logo} alt={logo} width={35} />
+            <p className={pathname == "/" ? styles.active : ""}>mirArchitect</p>
+          </div>
         </Link>
 
         <Link href="/overview">
@@ -31,6 +35,9 @@ const DesktopHeader = () => {
         </Link>
         <Link href="/help">
           <p className={pathname == "/help" ? styles.active : ""}>Help</p>
+        </Link>
+        <Link href="/cite-us">
+          <p className={pathname == "/cite-us" ? styles.active : ""}>Cite us</p>
         </Link>
       </div>
     </div>

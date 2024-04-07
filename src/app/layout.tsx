@@ -52,7 +52,7 @@ export default function RootLayout({
                 fontFamily: openSansBold.style.fontFamily,
                 rowSelectedBg: "white",
                 rowSelectedHoverBg: "#f9f9f9",
-                rowHoverBg: "#fff4f0",
+                rowHoverBg: "#EBF9F4",
               },
               Collapse: {
                 contentPadding: "0px 0px",
@@ -68,6 +68,9 @@ export default function RootLayout({
               Select: {
                 fontFamily: openSansBold.style.fontFamily,
                 // optionFontSize: 16,
+              },
+              Modal: {
+                borderRadiusSM: 16,
               },
             },
           }}

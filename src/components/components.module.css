@@ -1,5 +1,4 @@
 .background {
-  background: #f8f8f8;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -8,7 +7,7 @@
 .header {
   height: 100px;
   display: flex;
-  width: 60vw;
+  width: 58vw;
   justify-content: space-between;
   align-items: center;
 }
@@ -36,41 +35,6 @@
   text-decoration-thickness: 3px;
 }
 
-.loader {
-  display: inline-grid;
-  padding: 5px;
-  background: #fff;
-
-  filter: blur(4px) contrast(12);
-}
-.loader:before,
-.loader:after {
-  content: "";
-  grid-area: 1/1;
-  height: 50px;
-  aspect-ratio: 3;
-  --c: #0000 64%, #000 66% 98%, #0000 101%;
-  background: radial-gradient(35% 146% at 50% 159%, var(--c)) 0 0,
-    radial-gradient(35% 146% at 50% -59%, var(--c)) 100% 100%;
-  background-size: calc(200% / 3) 50%;
-  background-repeat: repeat-x;
-}
-.loader:before {
-  -webkit-mask: repeating-linear-gradient(90deg, #000 0 8%, #0000 0 15%);
-}
-.loader:after {
-  clip-path: inset(0 100% 0 0);
-  animation: l13 1.5s infinite linear;
-}
-@keyframes l13 {
-  50% {
-    clip-path: inset(0);
-  }
-  to {
-    clip-path: inset(0 0 0 100%);
-  }
-}
-
 .flyoutMenu {
   width: 100vw;
   height: 100vh;
@@ -96,6 +60,46 @@
 .backgroundCard {
   background: white;
   border-radius: 20px;
-  width: 100%;
-  padding: 30px;
+
+  padding: 25px 50px 25px 50px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.tableParameters {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.buttonParameters {
+  display: flex;
+  gap: 10px;
+}
+
+.parameter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  min-width: 300px;
+}
+
+.columnsParameters {
+  display: grid;
+  grid-auto-flow: row;
+  grid-gap: 20px;
+  grid-template-columns: 350px 350px;
+
+  padding: 10px;
 }

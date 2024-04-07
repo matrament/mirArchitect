@@ -49,6 +49,10 @@ main {
   }
 }
 
+p {
+  font-size: 14xpx;
+}
+
 a {
   text-decoration: none;
   color: black;
@@ -61,17 +65,42 @@ h4 {
 }
 
 h2 {
-  color: #ed6a5a;
+  color: #59c9a5;
   font-weight: 600;
   font-size: 24px;
   margin: 25px;
 }
 h1 {
-  color: #04afa4;
+  color: #59c9a5;
   font-weight: bold;
   font-size: 26px;
 }
 
 h3 {
   margin: 0;
+}
+
+h5 {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+h5:before,
+h5:after {
+  flex-grow: 1;
+  height: 1px;
+  content: "\a0";
+  background-color: #ddd;
+  position: relative;
+  top: 0.6em;
+}
+
+h5:before {
+  margin-right: 10px;
+}
+
+h5:after {
+  margin-left: 10px;
 }
