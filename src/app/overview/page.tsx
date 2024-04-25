@@ -5,35 +5,35 @@ import styles from "./page.module.css";
 const Overview = () => {
   return (
     <div className={styles.backgroundCard}>
-      <h1>Overview</h1>
+      <h2>
+        <span>Overview</span>
+      </h2>
 
       <p style={{ textAlign: "justify" }}>
-        miRArchitect a machine learning-based tool for rational design of
-        artificial miRNAs. The design process involves analyzing the target
-        sequence (input), designing and studying the structure and
-        thermodynamics of siRNA, selecting the best native pri-miRNA scaffold,
-        and developing amiRNA.
+        AmiRNAs have advantages over other RNAi tools in terms of gene silencing
+        specificity and lower off-target effects. However, only precise
+        processing of amiRNAs using Drosha and Dicer ensures efficient and safe
+        siRNAs. Since the sequence, structure and variability of pri-miRNA
+        structure strongly affect its processing, it is difficult to predict the
+        effects of replacing miRNA with an exogenous siRNA sequence.
+        Inappropriate amiRNA design can result in inefficient processing,
+        generation of siRNA variants with seed sequence changes, or induction of
+        arm switching - a process that leads to the release of the passenger
+        strand of the siRNA. However, it has been shown possible to change the
+        21-nt sequence of a mature miRNA in a natural miRNA precursor without
+        affecting miRNA biogenesis and maturation, opening the prospect of
+        designing amiRNAs with new targets.
         <br /> <br />
-        AmiRNAs have advantages over other RNAi tools in gene silencing
-        specificity and less off-target effects. However, only precise
-        processing of amiRNA with both Drosha and Dicer ensures an effective and
-        safe siRNA. Because the sequence, structure and structure fickleness of
-        a pri-miRNA strongly influence its processing, it is difficult to
-        predict the effects of replacement of the miRNA sequence with an
-        exogenous siRNA sequence. Improper amiRNA design may result in
-        inefficient processing, the generation of siRNA variants with seed
-        sequence changes or the induction of arm switching—a process that leads
-        to the release of the passenger strand of siRNA.
-        <br /> <br />
-        Nevertheless, we showed, that it is possible to alter the sequence of
-        the 21-nt mature miRNAs within the natural miRNA precursor, without
-        affecting miRNA biogenesis and maturation, which opens up the prospect
-        of creating amiRNAs with new targets by design.
-        <br /> <br />
-        miRarchitect was established to support Your Research, to add the new
-        dimension of rational design of amiRNA therapeutics.
+        miRarchitect was created to support the rational design of amiRNA
+        therapeutics. The design process uses state-of-the-art computational
+        techniques, including machine learning, and performs analysis of the
+        target sequence (input data), design and study of siRNA structure and
+        thermodynamics, selection of the best native pri-miRNA scaffold, and
+        amiRNA generation.
       </p>
-      <h1>Team</h1>
+      <h2>
+        <span>Team</span>
+      </h2>
       <p style={{ textAlign: "justify" }}>
         miRarchitect tool is managed by researchers at the Department of Genome
         Engineering and at the Department of Structural Bioinformatic, Institute

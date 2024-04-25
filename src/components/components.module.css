@@ -2,12 +2,14 @@
   width: 100vw;
   display: flex;
   justify-content: center;
+  background: #00081f;
 }
 
 .header {
-  height: 100px;
+  height: 85px;
   display: flex;
   width: 58vw;
+
   justify-content: space-between;
   align-items: center;
 }
@@ -15,11 +17,11 @@
 .foot {
   display: flex;
   justify-content: center;
+  flex-direction: row;
   align-items: center;
-  background-color: #f8f8f8;
-  width: 100%;
+  gap: 15px;
   margin-top: auto;
-  height: 100px;
+  height: 85px;
 }
 
 .footer {
@@ -29,7 +31,7 @@
 }
 
 .active {
-  text-decoration-color: #59c9a5;
+  text-decoration-color: #00faab;
   text-decoration-line: underline;
   text-underline-offset: 4px;
   text-decoration-thickness: 3px;
@@ -82,9 +84,11 @@
   gap: 20px;
 }
 
-.buttonParameters {
+.submitButton {
+  margin-top: 20px;
+  margin-bottom: 30px;
   display: flex;
-  gap: 10px;
+  justify-content: center;
 }
 
 .parameter {
@@ -102,4 +106,17 @@
   grid-template-columns: 350px 350px;
 
   padding: 10px;
+}
+
+.buttonSelect {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+.buttonParameters {
+  gap: 15px;
+  display: flex;
+  padding-left: 10px;
 }

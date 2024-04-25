@@ -1,8 +1,44 @@
 "use client";
+import { useState } from "react";
 import styles from "../components/components.module.css";
-import { Table, Collapse, Select, Button } from "antd";
+import {
+  Table,
+  Collapse,
+  Select,
+  Button,
+  Tooltip,
+  Checkbox,
+  Divider,
+} from "antd";
 import type { TableColumnsType, TableProps } from "antd";
-import AdvancedParameters from "./AdvancedParameters";
+import textweb from "../json/textweb.json";
+import type { CheckboxProps, GetProp } from "antd";
+
+type CheckboxValueType = GetProp<typeof Checkbox.Group, "value">[number];
+
+const CheckboxGroup = Checkbox.Group;
+
+const plainOptions = [
+  "hsa-mir-21",
+  "hsa-mir-30a",
+  "hsa-mir-33a",
+  "hsa-mir-122",
+  "hsa-mir-135b",
+  "hsa-mir-136-v1",
+  "hsa-mir-155",
+  "hsa-mir-203a",
+];
+
+const defaultCheckedList = [
+  "hsa-mir-21",
+  "hsa-mir-30a",
+  "hsa-mir-33a",
+  "hsa-mir-122",
+  "hsa-mir-135b",
+  "hsa-mir-136-v1",
+  "hsa-mir-155",
+  "hsa-mir-203a",
+];
 
 interface DataType {
   key: React.Key;
@@ -126,55 +162,81 @@ const onChange: TableProps<DataType>["onChange"] = (
 
 const ListGeneTranscript = () => {
   type TableRowSelection<T> = TableProps<T>["rowSelection"];
-  return (
-    <div className={styles.backgroundCard} style={{ marginTop: "20px" }}>
-      <h2 className={styles.title}>Gene Table</h2>
 
-      <div>
+  const [checkedList, setCheckedList] =
+    useState<CheckboxValueType[]>(defaultCheckedList);
+  const checkAll = plainOptions.length === checkedList.length;
+  const indeterminate =
+    checkedList.length > 0 && checkedList.length < plainOptions.length;
+
+  const onChang = (list: CheckboxValueType[]) => {
+    setCheckedList(list);
+  };
+
+  const onCheckAllChange: CheckboxProps["onChange"] = (e) => {
+    setCheckedList(e.target.checked ? plainOptions : []);
+  };
+
+  return (
+    <div>
+      <div className={styles.backgroundCard} style={{ marginTop: "20px" }}>
+        <h2 className={styles.title}>
+          <span>Gene Table</span>
+        </h2>
+
+        <div>
+          <Table
+            rowSelection={{
+              type: "radio",
+              ...rowSelection,
+            }}
+            columns={columns}
+            dataSource={data}
+            pagination={{ position: ["bottomCenter"] }}
+          />
+        </div>
+        <Divider />
+
+        <h2 className={styles.title}>
+          <span>Transcript Table</span>
+        </h2>
+
         <Table
           rowSelection={{
             type: "radio",
-            ...rowSelection,
+            ...rowSelectionT,
           }}
-          columns={columns}
-          dataSource={data}
+          columns={columnsTranscript}
+          dataSource={dataTranscript}
           pagination={{ position: ["bottomCenter"] }}
         />
+
+        <Divider />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            gap: "10px",
+            padding: "0px 20px 25px 20px",
+          }}
+        >
+          <h1>amiRNA ID:</h1>
+          <Checkbox
+            indeterminate={indeterminate}
+            onChange={onCheckAllChange}
+            checked={checkAll}
+          >
+            Check all
+          </Checkbox>
+          <CheckboxGroup
+            options={plainOptions}
+            value={checkedList}
+            onChange={onChang}
+          />
+        </div>
       </div>
-      <div
-        style={{
-          borderTop: "1px #ddd solid",
-          width: "100%",
-          margin: "10px 0 10px 0",
-        }}
-      ></div>
-
-      <h2 className={styles.title}>Transcript Table</h2>
-
-      <Table
-        rowSelection={{
-          type: "radio",
-          ...rowSelectionT,
-        }}
-        columns={columnsTranscript}
-        dataSource={dataTranscript}
-        pagination={{ position: ["bottomCenter"] }}
-      />
-
-      <div style={{ marginTop: "5px" }}>
-        <Collapse
-          items={[
-            {
-              key: "1",
-              label: <>Advanced parameters</>,
-              children: <AdvancedParameters />,
-            },
-          ]}
-        />
-      </div>
-      <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "25px" }}
-      >
+      <div className={styles.submitButton}>
         <Button type="primary" size="large">
           Submit
         </Button>

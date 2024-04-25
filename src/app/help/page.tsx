@@ -4,7 +4,9 @@ import styles from "./page.module.css";
 const Help = () => {
   return (
     <div className={styles.backgroundCard} style={{ width: "100%" }}>
-      <h1>Help</h1>
+      <h2>
+        <span>Help</span>
+      </h2>
       {/* <Anchor
         replace
         items={[

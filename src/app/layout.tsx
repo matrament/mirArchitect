@@ -3,22 +3,23 @@ import "./globals.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { ConfigProvider } from "antd";
-import { Montserrat } from "next/font/google";
+import { Lato } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 
 export const metadata: Metadata = {
-  title: "mirArchitect",
+  title: "miRarchitect",
   description:
     "Machine learning-based tool for rational design of artificial miRNAs.",
 };
-const openSans = Montserrat({
+const openSans = Lato({
   style: "normal",
-  weight: "300",
+  weight: "400",
   subsets: ["latin"],
 });
 
-const openSansBold = Montserrat({
+const openSansThin = Open_Sans({
   style: "normal",
-  weight: "500",
+  weight: "300",
   subsets: ["latin"],
 });
 
@@ -34,39 +35,45 @@ export default function RootLayout({
         <ConfigProvider
           theme={{
             token: {
-              colorPrimary: "#59c9a5",
+              colorPrimary: "#00FAAB",
               borderRadius: 16,
               fontFamily: openSans.style.fontFamily,
+              borderRadiusSM: 12,
+              borderRadiusLG: 20,
             },
             components: {
               Button: {
                 textHoverBg: "#f9f9f9",
-                fontFamily: openSansBold.style.fontFamily,
-                contentFontSize: 16,
+                primaryColor: "#000000",
+                fontFamily: openSans.style.fontFamily,
+                defaultBorderColor: "#000000",
+
+                // contentFontSize: 16,
               },
               Upload: {
                 lineWidth: 0,
               },
               Table: {
                 headerBorderRadius: 0,
-                fontFamily: openSansBold.style.fontFamily,
+                fontFamily: openSans.style.fontFamily,
                 rowSelectedBg: "white",
                 rowSelectedHoverBg: "#f9f9f9",
                 rowHoverBg: "#EBF9F4",
               },
               Collapse: {
                 contentPadding: "0px 0px",
-                fontFamily: openSansBold.style.fontFamily,
-                colorBorder: "#dcdcdc",
+                fontFamily: openSans.style.fontFamily,
+                // colorBorder: "#dcdcdc",
               },
               Input: {
-                fontFamily: openSansBold.style.fontFamily,
+                fontFamily: openSans.style.fontFamily,
+                // colorBorder: "#000000",
               },
               InputNumber: {
-                fontFamily: openSansBold.style.fontFamily,
+                fontFamily: openSans.style.fontFamily,
               },
               Select: {
-                fontFamily: openSansBold.style.fontFamily,
+                fontFamily: openSans.style.fontFamily,
                 // optionFontSize: 16,
               },
               Modal: {

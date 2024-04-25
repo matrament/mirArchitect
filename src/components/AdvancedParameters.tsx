@@ -1,3 +1,4 @@
+"use client";
 import { InputNumber, Checkbox, Select, Tooltip, Button, Modal } from "antd";
 import textweb from "../json/textweb.json";
 import styles from "./components.module.css";
@@ -146,27 +147,6 @@ const AdvancedParameters = () => {
               max={5}
               defaultValue={2.5}
               onChange={() => console.log("1")}
-            />
-          </div>
-        </Tooltip>
-        <Tooltip title={textweb.advanced_parameters.amirna_id}>
-          <div className={styles.parameter}>
-            amiRNA ID:{" "}
-            <Select
-              defaultValue="all"
-              style={{ width: 150 }}
-              onChange={() => console.log("1")}
-              options={[
-                { value: "all", label: "all" },
-                { value: "hsa-mir-21", label: "hsa-mir-21" },
-                { value: "hsa-mir-30a", label: "hsa-mir-30a" },
-                { value: "hsa-mir-33a", label: "hsa-mir-33a" },
-                { value: "hsa-mir-122", label: "hsa-mir-122" },
-                { value: "hsa-mir-135b", label: "hsa-mir-135b" },
-                { value: "hsa-mir-136-v1", label: "hsa-mir-136-v1" },
-                { value: "hsa-mir-155", label: "hsa-mir-155" },
-                { value: "hsa-mir-203a", label: "hsa-mir-203a" },
-              ]}
             />
           </div>
         </Tooltip>

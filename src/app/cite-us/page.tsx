@@ -4,7 +4,9 @@ import styles from "./page.module.css";
 const CiteUs = () => {
   return (
     <div className={styles.backgroundCard}>
-      <h1>Cite us</h1>
+      <h2>
+        <span>Cite us</span>
+      </h2>
 
       <div>
         miRarchitect - a machine learning-based tool for customized rational
@@ -12,8 +14,9 @@ const CiteUs = () => {
         <br />
         <br />
         Jaroslaw Synak <sup>1,2,*</sup>, Agnieszka Belter <sup>1,*</sup>, Marta
-        Mackowiak <sup>1,2</sup>, Anna Kotowska-Zimmer <sup>1</sup>, Marta
-        Szachniuk <sup>1,2,#</sup>, and Marta Olejniczak
+        Mackowiak <sup>1,2</sup>, Anna Kotowska-Zimmer <sup>1</sup>, Marek
+        Figlerowicz <sup>1</sup>, Marta Szachniuk <sup>1,2,#</sup>, and Marta
+        Olejniczak
         <sup>1,#</sup>
         <br />
         <br />
@@ -30,7 +33,7 @@ const CiteUs = () => {
         <sup>#</sup> Corresponding authors
         <br />
         <br />
-        marta.Szachniuk@cs.put.poznan.pl
+        marta.szachniuk@cs.put.poznan.pl
         <br />
         marta.olejniczak@ibch.poznan.pl
       </div>

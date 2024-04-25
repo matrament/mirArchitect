@@ -1,3 +1,4 @@
+"use client";
 import { message, UploadFile, UploadProps, Upload } from "antd";
 // import { pdb_id } from "../../types/modelsType";
 // import config from "../../config.json";
