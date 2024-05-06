@@ -42,7 +42,7 @@ const Overview = () => {
         Poland.
       </p>
       <div style={{ width: "100%" }}>
-        <p>mirArchitect Team</p>
+        <p>miRarchitect Team</p>
         <ul>
           <li>
             Agnieszka Belter<sup>1</sup>

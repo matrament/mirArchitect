@@ -58,7 +58,7 @@ export default function RootLayout({
                 fontFamily: openSans.style.fontFamily,
                 rowSelectedBg: "white",
                 rowSelectedHoverBg: "#f9f9f9",
-                rowHoverBg: "#EBF9F4",
+                rowHoverBg: "#F0FFFA",
               },
               Collapse: {
                 contentPadding: "0px 0px",

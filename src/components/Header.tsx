@@ -38,15 +38,15 @@ const DesktopHeader = () => {
         </Link>
 
         <Link href="/overview">
-          <h3 className={pathname == "/overview" ? styles.active : ""}>
+          <h3 className={pathname == "/overview/" ? styles.active : ""}>
             Overview
           </h3>
         </Link>
         <Link href="/help">
-          <h3 className={pathname == "/help" ? styles.active : ""}>Help</h3>
+          <h3 className={pathname == "/help/" ? styles.active : ""}>Help</h3>
         </Link>
         <Link href="/cite-us">
-          <h3 className={pathname == "/cite-us" ? styles.active : ""}>
+          <h3 className={pathname == "/cite-us/" ? styles.active : ""}>
             Cite us
           </h3>
         </Link>
@@ -68,7 +68,7 @@ const HeaderMobile = () => {
       <div className={styles.background}>
         <div className={styles.header}>
           <Link href="/">
-            <p className={pathname == "/" ? styles.active : ""}>mirArchitect</p>
+            <p className={pathname == "/" ? styles.active : ""}>miRarchitect</p>
           </Link>
           <Button
             icon={<MenuOutlined />}
@@ -99,20 +99,18 @@ const HeaderMobile = () => {
             />
           </div>
           <Link href="/" onClick={handleClick}>
-            <h4 className={pathname === "/" ? styles.active : ""}>Home</h4>
+            <p className={pathname === "/" ? styles.active : ""}>Home</p>
           </Link>
           <Link href="/about" onClick={handleClick}>
-            <h4 className={pathname === "/about" ? styles.active : ""}>
-              About
-            </h4>
+            <p className={pathname === "/about/" ? styles.active : ""}>About</p>
           </Link>
           <Link href="/cite_us" onClick={handleClick}>
-            <h4 className={pathname === "/cite_us" ? styles.active : ""}>
+            <p className={pathname === "/cite_us/" ? styles.active : ""}>
               Cite us
-            </h4>
+            </p>
           </Link>
           <Link href="/help" onClick={handleClick}>
-            <h4 className={pathname === "/help" ? styles.active : ""}>Help</h4>
+            <p className={pathname === "/help/" ? styles.active : ""}>Help</p>
           </Link>
         </div>
       </div>

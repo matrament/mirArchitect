@@ -1,14 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Radio, Input, Space, Tooltip, Modal, Collapse } from "antd";
 import textweb from "../json/textweb.json";
 import { QuestionCircleOutlined, UploadOutlined } from "@ant-design/icons";
 import styles from "./components.module.css";
 import type { RadioChangeEvent } from "antd";
 import AdvancedParameters from "./AdvancedParameters";
-import { ZCOOL_KuaiLe } from "next/font/google";
+import Link from "next/link";
 
-const SearchByIdentifier = (props: { setByIdentifier: any }) => {
+const SearchByIdentifier = () => {
   const [identifier, setIdentifier] = useState<string>("");
   const [sequence, setSequence] = useState<string>("");
   const [value, setValue] = useState(1);
@@ -65,13 +65,13 @@ const SearchByIdentifier = (props: { setByIdentifier: any }) => {
         <div
           style={{ display: "flex", rowGap: "20px", flexDirection: "column" }}
         >
-          <h4>Enter 1-5 sequences separated by semicolon</h4>
+          <h4>Enter sequence</h4>
           <TextArea
             placeholder="GAGUUGUACGCCUAUGU"
             allowClear
             value={sequence}
             onChange={(e) => onChangeSequence(e.target.value)}
-            rows={1}
+            autoSize
           />
           <h4>or upload</h4>
           <div style={{ paddingLeft: "20px" }}>
@@ -219,13 +219,11 @@ const SearchByIdentifier = (props: { setByIdentifier: any }) => {
         </div>
       </div>
       <div className={styles.submitButton}>
-        <Button
-          type="primary"
-          size="large"
-          onClick={(e) => props.setByIdentifier(false)}
-        >
-          Submit
-        </Button>
+        <Link href="/gentable">
+          <Button type="primary" size="large">
+            Submit
+          </Button>
+        </Link>
       </div>
     </>
   );

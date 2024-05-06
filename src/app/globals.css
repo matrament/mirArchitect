@@ -121,3 +121,7 @@ h5:before {
 h5:after {
   margin-left: 10px;
 }
+
+li::marker {
+  color: #00faab;
+}
