@@ -1,0 +1,122 @@
+.background {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  background: #00081f;
+}
+
+.header {
+  height: 85px;
+  display: flex;
+  width: 58vw;
+
+  justify-content: space-between;
+  align-items: center;
+}
+
+.foot {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  margin-top: auto;
+  height: 85px;
+}
+
+.footer {
+  bottom: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+.active {
+  text-decoration-color: #00faab;
+  text-decoration-line: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 3px;
+}
+
+.flyoutMenu {
+  width: 100vw;
+  height: 100vh;
+  background-color: #f8f8f8;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: transform 0.4s cubic-bezier(0, 0.6, 0, 0.6);
+
+  z-index: 1000;
+}
+
+.flyoutMenuHide {
+  transform: translate3d(-100vw, 0, 0);
+  overflow: scroll;
+}
+
+.flyoutMenuShow {
+  transform: translate3d(0vw, 0, 0);
+  overflow: hidden;
+}
+
+.backgroundCard {
+  background: white;
+  border-radius: 20px;
+
+  padding: 25px 50px 25px 50px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.tableParameters {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.submitButton {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.parameter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  min-width: 300px;
+}
+
+.columnsParameters {
+  display: grid;
+  grid-auto-flow: row;
+  grid-gap: 20px;
+  grid-template-columns: 350px 350px;
+
+  padding: 10px;
+}
+
+.buttonSelect {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+.buttonParameters {
+  gap: 15px;
+  display: flex;
+  padding-left: 10px;
+}
