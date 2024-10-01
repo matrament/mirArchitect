@@ -8,6 +8,7 @@ import { Button } from "antd";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
 import logo from "../assets/logo_mirarchitect.svg";
+import React from "react";
 
 const Header = () => {
   const isDesktop = useMediaQuery({ query: "(min-width: 1200px)" });

@@ -11,6 +11,7 @@ import { useState } from "react";
 import { ArrowRightOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import { gene } from "@/types/inputType";
 import { Button } from "antd";
+import React from "react";
 
 const Home = () => {
   const [stepDesign, setStepDesign] = useState(0);

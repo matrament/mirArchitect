@@ -13,6 +13,8 @@ import AdvancedParameters from "./AdvancedParameters";
 import Link from "next/link";
 import type { SearchProps } from "antd/es/input/Search";
 import { getEnsemblData } from "@/utils/getEnsemblData";
+import React from "react";
+import FastaReader from "./FastaReader";
 
 const SearchByIdentifier = (props: {
   identifier: string;
@@ -115,6 +117,7 @@ const SearchByIdentifier = (props: {
             autoSize
           />
           <h4>or upload from:</h4>
+          <FastaReader />
           <div style={{ paddingLeft: "20px" }}>
             <Radio.Group onChange={onChangeRadio} value={value}>
               <Space direction="vertical" style={{ width: "100%" }}>
