@@ -1,0 +1,10 @@
+.backgroundCard {
+  background: white;
+  border-radius: 20px;
+
+  padding: 25px 50px 25px 50px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+}

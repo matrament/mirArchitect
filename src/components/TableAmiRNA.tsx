@@ -1,15 +1,11 @@
 "use client";
+import React from "react";
 import { useState, useEffect } from "react";
 // import styles from "./page.module.css";
 import { DownloadOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Space, Tooltip, Collapse, Card } from "antd";
-import TableSequenceResult from "@/components/TableSequenceResult";
-import { Table, Tag } from "antd";
-import React from "react";
-import Heatmap from "@/components/Heatmap";
-import result from "../json/example_result_mirarchitect.json";
-import styles from "../page.module.css";
-const { Column, ColumnGroup } = Table;
+
+import { Table, Button } from "antd";
+import { exportDataToCSV } from "@/utils/exportDataToCSV";
 
 interface DataType {
   key: React.Key;
@@ -20,24 +16,30 @@ interface DataType {
   description: string;
 }
 
-const TableAmiRNA = () => {
-  const [data, setData] = useState([]);
+const TableAmiRNA = (props: { dataCandidate: any[] }) => {
+  const column: any = [
+    {
+      title: "Strand",
+      dataIndex: "strand",
+      key: "strand",
+    },
+    {
+      title: "Alignment",
+      dataIndex: "alignment",
+      key: "alignment",
+    },
+    {
+      title: "Region",
+      dataIndex: "region",
+      key: "region",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+    },
+  ];
 
-  useEffect(() => {
-    let tempData: any = [];
-    tempData = result.result.additional.sense_blast[1].map((el, index) => {
-      return {
-        key: index,
-        strand: el.side,
-        alignment: el.sseq,
-        accession_id: el.sacc,
-        region: "?",
-        description: el.stitle,
-      };
-    });
-    console.log(tempData);
-    setData(tempData);
-  }, []);
   return (
     <>
       <p>
@@ -50,38 +52,22 @@ const TableAmiRNA = () => {
         siRNA duplex.
       </p>
       <Table<DataType>
-        dataSource={data}
+        dataSource={props.dataCandidate}
         size="middle"
+        columns={column}
         bordered
         pagination={{ position: ["bottomCenter"] }}
         scroll={{ x: true }}
-      >
-        <Column
-          title="Accession ID"
-          dataIndex="accession_id"
-          key="accession_id"
-        />
-        <Column title="Strand" dataIndex="strand" key="strand" />
-        <Column title="Alignment" dataIndex="alignment" key="alignment" />
-
-        <Column title="Region" dataIndex="region" key="region" />
-
-        <Column title="Description" dataIndex="description" key="description" />
-      </Table>
-      <div>
+      ></Table>
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <Button
           type="primary"
           style={{ width: "150x" }}
           shape="round"
           icon={<DownloadOutlined />}
-          // onClick={() =>
-          //   exportDataToCSV(
-          //     csvData.sort((a: any, b: any) => a.key - b.key),
-          //     column,
-          //     "table",
-          //     "residues_MCQ_value"
-          //   )
-          // }
+          onClick={() =>
+            exportDataToCSV(props.dataCandidate, column, "table", "amiRNA")
+          }
         >
           Download .csv
         </Button>

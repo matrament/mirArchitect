@@ -1,39 +1,33 @@
-import React, { useState, ChangeEvent } from "react";
+import { Button, Upload } from "antd";
+import React, { useState } from "react";
+import { UploadOutlined } from "@ant-design/icons";
+import { gene, task } from "@/types/inputType";
 
-const FastaReader: React.FC = () => {
-  const [fastaContent, setFastaContent] = useState<string>("");
+const FastaReader = (props: { task: task; setTask: any }) => {
+  const [sequence, setSequence] = useState<string>("");
 
-  // Function to handle file reading
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]; // Get the file from the input
-    if (file) {
-      const reader = new FileReader();
-
-      // On file load, update the fastaContent state
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        const fileContent = e.target?.result as string; // Type assertion since result is potentially null
-        setFastaContent(fileContent); // Store the file content in state
-      };
-
-      reader.readAsText(file); // Read the file as text
-    }
+  const handleFileRead = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const contents = e.target?.result as string;
+      const lines = contents.split("\n");
+      const sequenceLine = lines.find((line) => !line.startsWith(">"))?.trim();
+      props.setTask({ ...props.task, seq: sequenceLine?.toUpperCase() || "" });
+    };
+    reader.readAsText(file);
+    return false; // Prevents automatic upload
   };
 
   return (
-    <div>
-      <h2>Upload and Display .FASTA File</h2>
-
-      {/* File input for FASTA file */}
-      <input type="file" accept=".fasta" onChange={handleFileChange} />
-
-      {/* Display the content of the .FASTA file */}
-      {fastaContent && (
-        <div>
-          <h3>FASTA File Content:</h3>
-          <pre style={{ whiteSpace: "pre-wrap" }}>{fastaContent}</pre>
-        </div>
-      )}
-    </div>
+    <Upload
+      beforeUpload={handleFileRead}
+      accept=".fasta"
+      showUploadList={false} // Hide the file list
+    >
+      <Button icon={<UploadOutlined style={{ color: "#00faab" }} />}>
+        Upload .fasta file
+      </Button>
+    </Upload>
   );
 };
 

@@ -35,3 +35,22 @@ export type ensembl_transcript = {
   strand: number;
   version: number;
 };
+
+export type task = {
+  seq: string;
+  params: {
+    GC_min: number;
+    GC_max: number;
+    max_GC_stretch: number;
+    bind_init: number;
+    "5prime_diff_len": number;
+    "5prime_diff_min": number;
+    diff_max: number;
+    max_tm: number;
+    force_insert_prefix: boolean;
+    filter_offtargets: boolean;
+    bad_prefix_score: number;
+    amiRNA_id: string | string[];
+  };
+  targets: string[];
+};

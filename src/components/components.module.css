@@ -76,14 +76,6 @@
   gap: 10px;
 }
 
-.tableParameters {
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
 .submitButton {
   margin-top: 20px;
   margin-bottom: 30px;
@@ -97,15 +89,6 @@
   align-items: center;
   gap: 10px;
   min-width: 300px;
-}
-
-.columnsParameters {
-  display: grid;
-  grid-auto-flow: row;
-  grid-gap: 20px;
-  grid-template-columns: 350px 350px;
-
-  padding: 10px;
 }
 
 .buttonSelect {

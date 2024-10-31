@@ -6,22 +6,42 @@ import SearchByIdentifier from "@/components/SearchByIdentifier";
 import ListGeneTranscript from "@/components/ListGeneTranscript";
 import DesignParametrization from "@/components/DesignParametrization";
 import { getEnsemblData } from "@/utils/getEnsemblData";
-import { Steps } from "antd";
+import { Steps, Button } from "antd";
 import { useState } from "react";
 import { ArrowRightOutlined, ArrowLeftOutlined } from "@ant-design/icons";
-import { gene } from "@/types/inputType";
-import { Button } from "antd";
+import { gene, task } from "@/types/inputType";
 import React from "react";
+import { getTaskID } from "@/utils/getTaskID";
+import { useRouter } from "next/navigation";
 
 const Home = () => {
   const [stepDesign, setStepDesign] = useState(0);
   const [ensemblData, setEnsemblData] = useState<gene[]>([]);
   const [identifier, setIdentifier] = useState<string>("");
-  const [sequence, setSequence] = useState<string>("");
+  const router = useRouter();
+
+  const [task, setTask] = useState<task>({
+    seq: "",
+    params: {
+      GC_min: 30,
+      GC_max: 65,
+      max_GC_stretch: 9,
+      bind_init: 5,
+      "5prime_diff_len": 3,
+      "5prime_diff_min": 2,
+      diff_max: 4,
+      max_tm: 21.5,
+      force_insert_prefix: true,
+      filter_offtargets: false,
+      bad_prefix_score: 2.5,
+      amiRNA_id: "all",
+    },
+    targets: [],
+  });
 
   const processProceed = () => {
     if (stepDesign === 0) {
-      if (identifier.length != 0 && sequence.length == 0) {
+      if (identifier.length != 0 && task.seq.length == 0) {
         getEnsemblData(identifier, setEnsemblData);
         setStepDesign(1);
       } else {
@@ -76,8 +96,8 @@ const Home = () => {
           <SearchByIdentifier
             identifier={identifier}
             setIdentifier={setIdentifier}
-            sequence={sequence}
-            setSequence={setSequence}
+            task={task}
+            setTask={setTask}
           />
         ) : null}
         {stepDesign === 1 ? (
@@ -86,7 +106,9 @@ const Home = () => {
             identifier={identifier}
           />
         ) : null}
-        {stepDesign === 2 ? <DesignParametrization /> : null}
+        {stepDesign === 2 ? (
+          <DesignParametrization task={task} setTask={setTask} />
+        ) : null}
       </div>
       <div className={styles.submitButton}>
         {stepDesign != 0 ? (
@@ -104,10 +126,21 @@ const Home = () => {
             style={{ marginLeft: "10px", marginRight: "10px" }}
             type="primary"
             size="large"
-            disabled={identifier.length == 0 && sequence.length == 0}
+            disabled={identifier.length == 0 && task.seq.length == 0}
             onClick={() => processProceed()}
           >
             Proceed <ArrowRightOutlined />
+          </Button>
+        ) : null}
+        {stepDesign == 2 ? (
+          <Button
+            style={{ marginLeft: "10px", marginRight: "10px" }}
+            type="primary"
+            size="large"
+            disabled={identifier.length == 0 && task.seq.length == 0}
+            onClick={() => getTaskID(task, router)}
+          >
+            Submit a task <ArrowRightOutlined />
           </Button>
         ) : null}
       </div>

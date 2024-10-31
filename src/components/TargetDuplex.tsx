@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 // import styles from "./page.module.css";
 import { Button, Form, Input, Space, Tooltip, Collapse, Card } from "antd";
-import TableSequenceResult from "@/components/TableSequenceResult";
+import TableSequenceResult from "@/components/TableAmiRNACandidates";
 import { Table, Tag } from "antd";
 import React from "react";
 import Heatmap from "@/components/Heatmap";

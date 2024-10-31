@@ -1,66 +1,48 @@
 "use client";
-import {
-  InputNumber,
-  Checkbox,
-  Select,
-  Tooltip,
-  Button,
-  Modal,
-  Form,
-  Switch,
-} from "antd";
+import { InputNumber, Button, Form, Switch, Col, Row } from "antd";
 import textweb from "../json/textweb.json";
-import styles from "./components.module.css";
-import { useState } from "react";
-import { InfoCircleOutlined, ReloadOutlined } from "@ant-design/icons";
-import { number } from "echarts";
+import { ReloadOutlined } from "@ant-design/icons";
 
 const AdvancedParameters = () => {
-  const infoAdvance = () => {
-    Modal.info({
-      title: "This is a notification message",
-      content: (
-        <div>
-          <p>
-            Optimal parameters to design amiRNA are chosen and fixed (as
-            indicated below). However, if needed, any/all of them could be
-            changed based on individual preferences (within the permissible
-            range)
-          </p>
-        </div>
-      ),
-      onOk() {},
-    });
+  const onFormLayoutChange = (size: any) => {
+    console.log(size);
   };
 
   return (
-    <div className={styles.tableParameters}>
-      <div className={styles.buttonParameters}>
-        <Button icon={<ReloadOutlined />}>Reset settings</Button>
-        <Button icon={<InfoCircleOutlined />}>Info</Button>
-      </div>
-      <div className={styles.columnsParameters}>
-        <Form>
+    <Form layout="horizontal" onValuesChange={onFormLayoutChange}>
+      <Form.Item>
+        <Button htmlType="reset" icon={<ReloadOutlined />}>
+          Reset settings
+        </Button>
+      </Form.Item>
+      <Row>
+        <Col span={30} key={1}>
           <Form.Item
-            name="min_gc_content"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+            }}
+            name="GC_min"
             label="Min GC content (%):"
             tooltip={textweb.advanced_parameters.min_gc_content}
             initialValue={30}
             rules={[
               { required: true, message: "Please enter value" },
               { min: 0, max: 100, type: "number" },
-              { warningOnly: true, min: 30, message: "tak se", type: "number" },
+              {
+                warningOnly: true,
+                min: 30,
+                message: "not recommended value",
+                type: "number",
+              },
             ]}
-            // min={0}
-            // max={100}
-            // defaultValue={30}
-            // onChange={() => console.log("1")}
           >
             <InputNumber />
           </Form.Item>
 
           <Form.Item
-            name="max_gc_content"
+            name="GC_max"
             label="Max GC content (%):"
             tooltip={textweb.advanced_parameters.max_gc_content}
             initialValue={65}
@@ -70,7 +52,7 @@ const AdvancedParameters = () => {
               {
                 warningOnly: true,
                 max: 65,
-                message: "tak se",
+                message: "not recommended value",
                 type: "number",
               },
             ]}
@@ -79,21 +61,26 @@ const AdvancedParameters = () => {
           </Form.Item>
 
           <Form.Item
-            name="max_gc_stretch"
+            name="max_GC_stretch"
             label="Max GC stretch:"
             tooltip={textweb.advanced_parameters.max_gc_stretch}
             initialValue={9}
             rules={[
               { required: true, message: "Please enter value" },
               { min: 1, max: 1000, type: "number" },
-              { warningOnly: true, max: 9, message: "tak se", type: "number" },
+              {
+                warningOnly: true,
+                max: 9,
+                message: "not recommended value",
+                type: "number",
+              },
             ]}
           >
             <InputNumber />
           </Form.Item>
 
           <Form.Item
-            name="number_of_bps_to_init_binding"
+            name="bind_init"
             label="Number of bps to init binding:"
             tooltip={textweb.advanced_parameters.number_of_bps_to_init_binding}
             initialValue={5}
@@ -105,7 +92,7 @@ const AdvancedParameters = () => {
             <InputNumber />
           </Form.Item>
           <Form.Item
-            name="number_of_bps_to_init_duplex_dissociation"
+            name="5prime_diff_len"
             label="Bps to init duplex dissociation:"
             tooltip={
               textweb.advanced_parameters
@@ -121,7 +108,7 @@ const AdvancedParameters = () => {
           </Form.Item>
 
           <Form.Item
-            name="min_mfe_difference_between_ends"
+            name="5prime_diff_min"
             label="Min MFE difference between ends:"
             tooltip={
               textweb.advanced_parameters.min_mfe_difference_between_ends
@@ -134,23 +121,29 @@ const AdvancedParameters = () => {
           >
             <InputNumber />
           </Form.Item>
-
+        </Col>
+        <Col span={30} offset={6} key={2}>
           <Form.Item
-            name="two_d_structure_differences"
+            name="diff_max"
             label="2D struct. differences:"
             tooltip={textweb.advanced_parameters.two_d_structure_differences}
             initialValue={4}
             rules={[
               { required: true, message: "Please enter value" },
               { min: 0, max: 1000, type: "number" },
-              { warningOnly: true, max: 4, message: "tak se", type: "number" },
+              {
+                warningOnly: true,
+                max: 4,
+                message: "not recommended value",
+                type: "number",
+              },
             ]}
           >
             <InputNumber />
           </Form.Item>
 
           <Form.Item
-            name="max_melting_temperature"
+            name="max_tm"
             label="Max melting temperature:"
             tooltip={textweb.advanced_parameters.max_melting_temperature}
             initialValue={21.5}
@@ -160,7 +153,7 @@ const AdvancedParameters = () => {
               {
                 warningOnly: true,
                 max: 21.5,
-                message: "tak se",
+                message: "not recommended value",
                 type: "number",
               },
             ]}
@@ -168,23 +161,23 @@ const AdvancedParameters = () => {
             <InputNumber />
           </Form.Item>
           <Form.Item
-            name="different_prefixes"
+            name="force_insert_prefix"
             label="Different prefixes:"
             tooltip={textweb.advanced_parameters.different_prefixes}
             valuePropName="checked"
           >
-            <Switch />
+            <Switch defaultChecked />
           </Form.Item>
           <Form.Item
-            name="filter_off_targets"
-            label="Different prefixes:"
+            name="filter_offtargets"
+            label="Filter off-targets:"
             tooltip={textweb.advanced_parameters.filter_off_targets}
             valuePropName="checked"
           >
             <Switch />
           </Form.Item>
           <Form.Item
-            name="penalty_for_bad_prefix"
+            name="bad_prefix_score"
             label="Penalty for bad prefix:"
             tooltip={textweb.advanced_parameters.penalty_for_bad_prefix}
             initialValue={2.5}
@@ -195,9 +188,9 @@ const AdvancedParameters = () => {
           >
             <InputNumber />
           </Form.Item>
-        </Form>
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Form>
   );
 };
 
