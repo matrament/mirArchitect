@@ -1,18 +1,27 @@
 "use client";
 import { useEffect, useState } from "react";
 import styles from "../components/components.module.css";
-import { Table, Checkbox } from "antd";
+import { Table, Checkbox, Spin } from "antd";
 import type { TableColumnsType, TableProps } from "antd";
 import textweb from "../json/textweb.json";
-import type { CheckboxProps, GetProp } from "antd";
-import { gene, transcript, ensembl_transcript } from "@/types/inputType";
+import { gene, transcript, ensembl_transcript, task } from "@/types/inputType";
 import { getTranscriptData } from "@/utils/getTranscriptData";
+import { getSeqFromTranscript } from "@/utils/getSeqFromTranscript";
+import { getEnsemblData } from "@/utils/getEnsemblData";
 
 interface DataType {
   // key: React.Key;
   id: string;
   type: string;
 }
+
+const contentStyle: React.CSSProperties = {
+  padding: 50,
+  background: "rgba(0, 0, 0, 0.05)",
+  borderRadius: 4,
+};
+
+const content = <div style={contentStyle} />;
 
 const columns: TableColumnsType<DataType> = [
   {
@@ -32,7 +41,15 @@ const columnsTranscript: TableColumnsType<transcript> = [
   {
     title: "Stable ID",
     dataIndex: "stableId",
-    render: (text: string) => <a>{text}</a>,
+    render: (text: string) => (
+      <a
+        href={`https://www.ensembl.org/Homo_sapiens/Transcript/Summary?t=${text}`}
+        target="_blank"
+        style={{ boxShadow: "inset 0 -0.1em 0 0 #00faab" }}
+      >
+        {text}
+      </a>
+    ),
   },
   {
     title: "Start",
@@ -64,86 +81,48 @@ const columnsTranscript: TableColumnsType<transcript> = [
   },
 ];
 
-const dataTranscript: transcript = {
-  key: "1",
-  stableId: "ENST00000497488",
-  start: 43044295,
-  end: 43125300,
-  lengths: 6335,
-  name: "BRCA1-222",
-  exons: 15,
-  version: 2,
-};
-const rowSelectionT = {
-  onChange: (selectedRowKeys: React.Key[], selectedRows: transcript[]) => {
-    console.log(
-      `selectedRowKeys: ${selectedRowKeys}`,
-      "selectedRows: ",
-      selectedRows
-    );
-  },
-};
-
-const onChange: TableProps<DataType>["onChange"] = (
-  pagination,
-  filters,
-  sorter,
-  extra
-) => {
-  console.log("params", pagination, filters, sorter, extra);
-};
-
 const ListGeneTranscript = (props: {
-  ensemblData: gene[];
   identifier: string;
+  task: task;
+  setTask: any;
 }) => {
-  type TableRowSelection<T> = TableProps<T>["rowSelection"];
-
-  const [transcriptData, setTranscriptData] = useState<ensembl_transcript>();
+  const [ensemblData, setEnsemblData] = useState<gene[]>([]);
+  const [transcripts, setTranscripts] = useState<ensembl_transcript[]>();
   const [transcriptTable, setTranscriptTable] = useState<transcript[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const genSelection = {
+  useEffect(() => {
+    getEnsemblData(props.identifier, setEnsemblData);
+  }, []);
+
+  const genOrTranscriptSelection = {
     onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
-      getTranscriptData(selectedRows[0].id, setTranscriptData);
+      setLoading(true);
+      getTranscriptData(selectedRows[0].id, setTranscripts);
     },
   };
-  useEffect(() => {
-    translateTranscriptData();
-    // if (transcriptData.length != 0) {
-    //   console.log("dupa");
-    // }
-  }, [transcriptData]);
-
-  const translateTranscriptData = () => {
-    let x: transcript[] = [];
-    if (transcriptData != undefined) {
-      x = [
-        {
-          key: transcriptData.id,
-          stableId: transcriptData.id,
-          start: transcriptData.start,
-          end: transcriptData.end,
-          lengths: 2,
-          name: transcriptData.display_name,
-          exons: 15,
-          version: transcriptData.version,
-        },
-      ];
-    }
-
-    // let x: transcript[] = transcriptData.map((e: ensembl_transcript) => ({
-    //   key: e.id,
-    //   stableId: e.id,
-    //   start: e.start,
-    //   end: e.end,
-    //   lengths: 2,
-    //   name: e.display_name,
-    //   exons: 15,
-    //   version: e.version,
-    // }));
-
-    setTranscriptTable(x);
+  const transcriptSelection = {
+    onChange: (selectedRowKeys: React.Key[], selectedRows: transcript[]) => {
+      getSeqFromTranscript(selectedRows[0].key, props.task, props.setTask);
+    },
   };
+
+  useEffect(() => {
+    let x: transcript[] = [];
+    if (transcripts != undefined) {
+      x = transcripts.map((el) => ({
+        key: el.id,
+        stableId: el.id,
+        start: el.start,
+        end: el.end,
+        lengths: el.length,
+        name: el.display_name,
+        exons: el.Exon.length,
+        version: el.version,
+      }));
+    }
+    setTranscriptTable(x);
+  }, [transcripts]);
 
   return (
     <div>
@@ -152,21 +131,23 @@ const ListGeneTranscript = (props: {
           <span>{props.identifier}</span>
         </h2>
         <h4>Select gen/transcript</h4>
-        {props.ensemblData.length != 0 ? (
+        {ensemblData.length != 0 ? (
           <div>
             <Table
               rowSelection={{
                 type: "radio",
-                ...genSelection,
+                ...genOrTranscriptSelection,
               }}
               columns={columns}
-              dataSource={props.ensemblData}
+              dataSource={ensemblData}
               rowKey={(record) => record.id}
               pagination={{ position: ["bottomCenter"] }}
             />
           </div>
         ) : (
-          <p>Loading...</p>
+          <Spin tip="Loading" size="large">
+            {content}
+          </Spin>
         )}
         {transcriptTable?.length != 0 ? (
           <div>
@@ -174,13 +155,17 @@ const ListGeneTranscript = (props: {
             <Table
               rowSelection={{
                 type: "radio",
-                ...rowSelectionT,
+                ...transcriptSelection,
               }}
               columns={columnsTranscript}
               dataSource={transcriptTable}
               pagination={{ position: ["bottomCenter"] }}
             />
           </div>
+        ) : loading ? (
+          <Spin tip="Loading" size="large">
+            {content}
+          </Spin>
         ) : null}
       </div>
     </div>

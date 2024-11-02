@@ -4,7 +4,7 @@ export type gene = {
 };
 
 export type transcript = {
-  key: React.Key;
+  key: string;
   stableId: string;
   start: number;
   end: number;

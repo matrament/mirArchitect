@@ -3,6 +3,7 @@ import { message } from "antd";
 export function getResult(
   taskID: string,
   setResultData: any,
+  setLoading: any,
   pollingInterval = 3000
 ) {
   const requestOptions = {
@@ -21,6 +22,7 @@ export function getResult(
     .then((response: any) => {
       if (response.status === 404) {
         message.error("Task not found");
+        setLoading(false);
         return null;
       } else {
         return response.json();
@@ -29,13 +31,17 @@ export function getResult(
     .then((response: any) => {
       if (response && response.status === "finished") {
         setResultData(response.result);
+        setLoading(false);
       } else if (response && response.status === "in progress") {
         setTimeout(() => {
           getResult(taskID, setResultData, pollingInterval); // Retry after delay
         }, pollingInterval);
       } else if (response) {
         message.info("Unexpected status: " + response.status);
+        setLoading(false);
       }
     })
-    .catch((error: any) => message.error("Something went wrong, try again"));
+    .catch((error: any) => {
+      message.error("Something went wrong, try again"), setLoading(false);
+    });
 }

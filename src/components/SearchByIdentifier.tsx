@@ -1,26 +1,20 @@
 "use client";
+import React from "react";
 import { useState } from "react";
-import { Button, Radio, Input, Space, Tooltip, Modal, Collapse } from "antd";
+import { Button, Radio, Input, Space, Tooltip, Modal, Form } from "antd";
 import textweb from "../json/textweb.json";
-import {
-  QuestionCircleOutlined,
-  UploadOutlined,
-  ArrowRightOutlined,
-} from "@ant-design/icons";
+import { UploadOutlined } from "@ant-design/icons";
 import styles from "./components.module.css";
 import type { RadioChangeEvent } from "antd";
-import AdvancedParameters from "./AdvancedParameters";
-import Link from "next/link";
 import type { SearchProps } from "antd/es/input/Search";
-import { getEnsemblData } from "@/utils/getEnsemblData";
-import React from "react";
 import FastaReader from "./FastaReader";
+import { gene, task } from "@/types/inputType";
 
 const SearchByIdentifier = (props: {
   identifier: string;
   setIdentifier: any;
-  sequence: string;
-  setSequence: any;
+  task: task;
+  setTask: any;
 }) => {
   // const [identifier, setIdentifier] = useState<string>("");
   const [value, setValue] = useState(0);
@@ -44,14 +38,14 @@ const SearchByIdentifier = (props: {
   };
 
   const onChangeSequence = (e: string) => {
-    props.setSequence(e.toUpperCase());
+    props.setTask({ ...props.task, seq: e.toUpperCase() });
     setValue(0);
     // setIdentifier("");
   };
 
   const onChangeRadio = (e: RadioChangeEvent) => {
     setValue(e.target.value);
-    props.setSequence("");
+    props.setTask({ ...props.task, seq: "" });
   };
 
   const onSearch: SearchProps["onSearch"] = (value, _e, info) => {
@@ -62,25 +56,6 @@ const SearchByIdentifier = (props: {
   return (
     <>
       <div className={styles.backgroundCard}>
-        {/* <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {/* <h2 className={styles.title}>
-            <span>Specify the target</span>
-          </h2> */}
-        {/* <div
-            onClick={infoGen}
-            style={{ cursor: "pointer", paddingLeft: "10px" }}
-          > */}
-        {/* <QuestionCircleOutlined style={{ color: "#00faab" }} />
-          </div> 
-        </div> */}
-
         <div
           style={{ display: "flex", rowGap: "20px", flexDirection: "column" }}
         >
@@ -99,7 +74,7 @@ const SearchByIdentifier = (props: {
               placeholder="NM_005656/TMPRSS2"
               allowClear
               value={props.identifier}
-              disabled={props.sequence != ""}
+              disabled={props.task.seq != ""}
               onChange={(e) =>
                 props.setIdentifier(e.target.value.toUpperCase())
               }
@@ -111,13 +86,12 @@ const SearchByIdentifier = (props: {
           <TextArea
             placeholder="GAGUUGUACGCCUAUGU"
             allowClear
-            value={props.sequence}
-            disabled={props.identifier != ""}
+            value={props.task.seq}
+            // disabled={props.identifier != ""}
             onChange={(e) => onChangeSequence(e.target.value)}
             autoSize
           />
           <h4>or upload from:</h4>
-          <FastaReader />
           <div style={{ paddingLeft: "20px" }}>
             <Radio.Group onChange={onChangeRadio} value={value}>
               <Space direction="vertical" style={{ width: "100%" }}>
@@ -131,13 +105,10 @@ const SearchByIdentifier = (props: {
                       alignItems: "center",
                     }}
                   >
-                    <p>local file (FASTA)</p>
-                    <Button
-                      icon={<UploadOutlined style={{ color: "#00faab" }} />}
-                      disabled={value != 1}
-                    >
-                      Click to Upload
-                    </Button>
+                    <p>local file (.fasta)</p>
+                    {value == 1 ? (
+                      <FastaReader task={props.task} setTask={props.setTask} />
+                    ) : null}
                   </div>
                 </Radio>
                 <Radio value={2}>
@@ -155,7 +126,7 @@ const SearchByIdentifier = (props: {
                       size="small"
                       onClick={() => {
                         props.setIdentifier("NM_005656");
-                        props.setSequence("");
+                        props.setTask({ ...props.task, seq: "" });
                       }}
                     >
                       1
@@ -164,7 +135,7 @@ const SearchByIdentifier = (props: {
                       size="small"
                       onClick={() => {
                         props.setIdentifier("TMPRSS2");
-                        props.setSequence("");
+                        props.setTask({ ...props.task, seq: "" });
                       }}
                     >
                       2
@@ -173,7 +144,7 @@ const SearchByIdentifier = (props: {
                       size="small"
                       onClick={() => {
                         props.setIdentifier("ENSG00000184012");
-                        props.setSequence("");
+                        props.setTask({ ...props.task, seq: "" });
                       }}
                     >
                       3
@@ -186,7 +157,10 @@ const SearchByIdentifier = (props: {
                     <Button
                       size="small"
                       onClick={() => {
-                        props.setSequence("GAGUUGUACGCCUAUGUGAUGGA"),
+                        props.setTask({
+                          ...props.task,
+                          seq: "GAGUUGUACGCCUAUGUGAUGGA",
+                        }),
                           props.setIdentifier("");
                       }}
                     >
@@ -195,7 +169,10 @@ const SearchByIdentifier = (props: {
                     <Button
                       size="small"
                       onClick={() => {
-                        props.setSequence("CAGCCAAGAUAAAUUUGAACUGA"),
+                        props.setTask({
+                          ...props.task,
+                          seq: "CAGCCAAGAUAAAUUUGAACUGA",
+                        }),
                           props.setIdentifier("");
                       }}
                     >
@@ -208,7 +185,10 @@ const SearchByIdentifier = (props: {
                   <Button
                     size="small"
                     onClick={() => {
-                      props.setSequence(textweb.example_sequence);
+                      props.setTask({
+                        ...props.task,
+                        seq: textweb.example_sequence,
+                      });
                       props.setIdentifier("");
                     }}
                   >

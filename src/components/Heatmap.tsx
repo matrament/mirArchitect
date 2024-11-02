@@ -2,11 +2,7 @@
 import { useState, useEffect } from "react";
 import { ReactECharts } from "./echarts/ReactECharts";
 import { ReactEChartsProps } from "./echarts/ReactECharts";
-import result from "../json/example_result_mirarchitect.json";
-
-import { DotChartOutlined, LineChartOutlined } from "@ant-design/icons";
 import { Divider, Row, Space, Switch, Tooltip } from "antd";
-import { useMediaQuery } from "react-responsive";
 
 type datasetModels = {
   [key: string]: string | number;
@@ -20,33 +16,33 @@ const Heatmap = (props: { dataHeatmap: any }) => {
   const [sequence, setSequence] = useState<string[]>([]);
 
   useEffect(() => {
+    console.log(props.dataHeatmap);
     let tempEnergy: any = [];
     let tempShannon: any = [];
     let tempSequence: string =
-      result.result.result[0].amiRNA.seq.head +
-      result.result.result[0].amiRNA.seq.insert +
-      result.result.result[0].amiRNA.seq.insertc +
-      result.result.result[0].amiRNA.seq.middle +
-      result.result.result[0].amiRNA.seq.tail;
+      props.dataHeatmap.amiRNA.seq.head +
+      props.dataHeatmap.amiRNA.seq.insert +
+      props.dataHeatmap.amiRNA.seq.insertc +
+      props.dataHeatmap.amiRNA.seq.middle +
+      props.dataHeatmap.amiRNA.seq.tail;
     let tempDiffStructure: any = [];
     let tempNaturalStructure: string[] =
-      result.result.result[0].amiRNA.natural_structure.split("");
-    let tempStructure: string[] =
-      result.result.result[0].amiRNA.structure.split("");
-    tempEnergy = result.result.result[0].amiRNA.free_energy.map((el, index) => {
-      return [
-        index,
-        1,
-        el - result.result.result[0].amiRNA.natural_free_energy[index],
-      ];
-    });
-    tempShannon = result.result.result[0].amiRNA.shannon.map((el, index) => {
-      return [
-        index,
-        2,
-        el - result.result.result[0].amiRNA.natural_shannon[index],
-      ];
-    });
+      props.dataHeatmap.amiRNA.natural_structure.split("");
+    let tempStructure: string[] = props.dataHeatmap.amiRNA.structure.split("");
+    tempEnergy = props.dataHeatmap.amiRNA.free_energy.map(
+      (el: any, index: number) => {
+        return [
+          index,
+          1,
+          el - props.dataHeatmap.amiRNA.natural_free_energy[index],
+        ];
+      }
+    );
+    tempShannon = props.dataHeatmap.amiRNA.shannon.map(
+      (el: any, index: number) => {
+        return [index, 2, el - props.dataHeatmap.amiRNA.natural_shannon[index]];
+      }
+    );
     tempDiffStructure = tempStructure.map((el, index) => {
       return [index, 0, el === tempNaturalStructure[index] ? 0 : 1];
     });
@@ -55,7 +51,7 @@ const Heatmap = (props: { dataHeatmap: any }) => {
     setShannon(tempShannon);
     setStructure(tempStructure);
     setSequence(tempSequence.split(""));
-  }, []);
+  }, [props.dataHeatmap]);
 
   const type = [
     "Δ 2D Structure",

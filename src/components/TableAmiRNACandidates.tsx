@@ -1,7 +1,7 @@
 "use client";
 import styles from "./components.module.css";
 import { useState } from "react";
-import { Table, Button, Card, Col, Row } from "antd";
+import { Table, Button, Card, Col, Row, TableColumnsType } from "antd";
 import type { TableProps } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 const { Column, ColumnGroup } = Table;
@@ -21,6 +21,7 @@ const column: any = [
     title: "Pri-miRNA",
     dataIndex: "pri_mirna",
     key: "pri_mirna",
+    fixed: "left",
   },
   {
     title: "amiRNA sequence",
@@ -146,6 +147,7 @@ const TableAmiRNACandidates = (props: {
             title="Pri-miRNA"
             dataIndex="pri_mirna"
             key="pri_mirna"
+            fixed="left"
             render={(e: string) => (
               <div style={{ textWrap: "nowrap" }}>{e}</div>
             )}

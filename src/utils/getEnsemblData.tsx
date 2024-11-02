@@ -21,7 +21,6 @@ export function getEnsemblData(ensemblId: string, setEnsemblData: any) {
         message.error(lang.rcsb_error_with_name + "'" + ensemblId + "'");
       } else {
         setEnsemblData(response);
-        console.log("gicior");
       }
     });
 }

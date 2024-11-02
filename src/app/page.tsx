@@ -5,9 +5,8 @@ import textweb from "../json/textweb.json";
 import SearchByIdentifier from "@/components/SearchByIdentifier";
 import ListGeneTranscript from "@/components/ListGeneTranscript";
 import DesignParametrization from "@/components/DesignParametrization";
-import { getEnsemblData } from "@/utils/getEnsemblData";
 import { Steps, Button } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRightOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import { gene, task } from "@/types/inputType";
 import React from "react";
@@ -16,7 +15,6 @@ import { useRouter } from "next/navigation";
 
 const Home = () => {
   const [stepDesign, setStepDesign] = useState(0);
-  const [ensemblData, setEnsemblData] = useState<gene[]>([]);
   const [identifier, setIdentifier] = useState<string>("");
   const router = useRouter();
 
@@ -42,7 +40,6 @@ const Home = () => {
   const processProceed = () => {
     if (stepDesign === 0) {
       if (identifier.length != 0 && task.seq.length == 0) {
-        getEnsemblData(identifier, setEnsemblData);
         setStepDesign(1);
       } else {
         setStepDesign(2);
@@ -65,6 +62,9 @@ const Home = () => {
       }
     }
   };
+  useEffect(() => {
+    console.log(task);
+  }, [task]);
 
   return (
     <>
@@ -102,8 +102,9 @@ const Home = () => {
         ) : null}
         {stepDesign === 1 ? (
           <ListGeneTranscript
-            ensemblData={ensemblData}
             identifier={identifier}
+            task={task}
+            setTask={setTask}
           />
         ) : null}
         {stepDesign === 2 ? (
@@ -121,12 +122,23 @@ const Home = () => {
             <ArrowLeftOutlined /> Go Back
           </Button>
         ) : null}
-        {stepDesign != 2 ? (
+        {stepDesign == 0 ? (
           <Button
             style={{ marginLeft: "10px", marginRight: "10px" }}
             type="primary"
             size="large"
             disabled={identifier.length == 0 && task.seq.length == 0}
+            onClick={() => processProceed()}
+          >
+            Proceed <ArrowRightOutlined />
+          </Button>
+        ) : null}
+        {stepDesign == 1 ? (
+          <Button
+            style={{ marginLeft: "10px", marginRight: "10px" }}
+            type="primary"
+            size="large"
+            disabled={task.seq.length == 0}
             onClick={() => processProceed()}
           >
             Proceed <ArrowRightOutlined />

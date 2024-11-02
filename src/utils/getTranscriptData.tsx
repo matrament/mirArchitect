@@ -20,12 +20,15 @@ export function getTranscriptData(
   )
     .then((response: any) => response.json())
     .then((response: any) => {
-      if (response.length === 0) {
-        // setPdbError(true);
+      if (!response) {
         message.error(lang.rcsb_error_with_name + "'" + transcriptId + "'");
       } else {
-        setTranscriptData(response);
-        console.log(response);
+        if (response.object_type === "Transcript") {
+          setTranscriptData([response]);
+        } else if (response.object_type === "Gene") {
+          setTranscriptData(response.Transcript);
+          console.log(response.Transcript);
+        }
       }
     });
 }
